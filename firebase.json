@@ -1,0 +1,27 @@
+{
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "functions": {
+    "source": "functions",
+    "predeploy": [
+      "npm --prefix src run generate && cp src/nuxt.config.js functions/"
+    ]
+  },
+  "hosting": {
+    "predeploy": [
+      "rm -rf public/* && cp -a src/dist/. public && cp -a src/static/. public/"
+    ],
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "app"
+      }
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}
